@@ -7,7 +7,7 @@ projects:
   terraform_version: "v0.11.8"
   autoplan:
     when_modified:
-      - "**.tf"
+      - "*.tf"
     enabled: true
   apply_requirements:
     - "approved"
