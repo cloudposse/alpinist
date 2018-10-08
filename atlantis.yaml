@@ -3,8 +3,8 @@ version: 2
 projects:
 - name: "alpinist"
   dir: "terraform"
-  #workspace: "default"
-  terraform_version: "v0.11.8"
+  workspace: "default"
+  terraform_version: "v0.11.7"
   autoplan:
     when_modified:
       - "*.tf"
@@ -18,7 +18,7 @@ workflows:
     plan:
       steps:
       - run: "init-terraform"
-      - plan
+      - run: "terraform plan -no-color"
     apply:
       steps:
       - run: "init-terraform"
