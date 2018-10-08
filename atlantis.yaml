@@ -22,4 +22,4 @@ workflows:
     apply:
       steps:
       - run: "init-terraform"
-      - run: "terragrunt apply -no-color -var-file atlantis.tfvars $PLANFILE"
+      - run: "terraform apply -no-color -var-file atlantis.tfvars $PLANFILE"
