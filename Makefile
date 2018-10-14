@@ -13,6 +13,14 @@ cf/package:
 	  --output-template-file serverless-output.yaml \
 	  --s3-bucket $(LAMBDA_BUCKET)
 
+cf/plan:
+	aws cloudformation deploy \
+	  --parameter-overrides BucketName=$(APK_BUCKET) FunctionName=$(STACK_NAME) \
+	  --template-file serverless-output.yaml \
+	  --stack-name $(STACK_NAME) \
+	  --capabilities CAPABILITY_IAM \
+	  --no-execute-changeset
+
 cf/deploy:
 	aws cloudformation deploy \
 	  --parameter-overrides BucketName=$(APK_BUCKET) FunctionName=$(STACK_NAME) \
@@ -33,4 +41,3 @@ aws/ssm:
 sync:
 	aws s3 cp contrib/install.sh s3://$(APK_BUCKET)/install.sh
 	aws s3 cp ops@cloudposse.com.rsa.pub s3://$(APK_BUCKET)/  
-#	aws s3 sync ../packages/tmp/vendor/ s3://$(APK_BUCKET)/3.8/vendor/

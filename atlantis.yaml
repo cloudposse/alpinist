@@ -1,7 +1,9 @@
 version: 2
 
 projects:
-- name: "alpinist"
+
+- name: "terraform"
+  workflow: "terraform"
   dir: "terraform"
   workspace: "default"
   terraform_version: "v0.11.7"
@@ -11,10 +13,19 @@ projects:
     enabled: true
   apply_requirements:
     - "approved"
-  workflow: "default"
+
+- name: "cloudformation"
+  workflow: "cloudformation"
+  dir: "."
+  autoplan:
+    when_modified:
+      - "*.yaml"
+    enabled: true
+  apply_requirements:
+    - "approved"
 
 workflows:
-  default:
+  terraform:
     plan:
       steps:
       - run: "init-terraform"
@@ -23,3 +34,13 @@ workflows:
       steps:
       - run: "init-terraform"
       - run: "terraform apply -no-color -var-file atlantis.tfvars $PLANFILE"
+
+  cloudformation:
+    plan:
+      steps:
+      - run: "make cf/plan"
+    apply:
+      steps:
+      - run: "make cf/package"
+      - run: "make cf/deploy"
+      - run: "make cf/sync"
