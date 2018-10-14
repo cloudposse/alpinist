@@ -38,7 +38,7 @@ workflows:
   cloudformation:
     plan:
       steps:
-      - run: "make cf/plan AWS_PROFILE="
+      - run: "make cf/plan AWS_DEFAULT_PROFILE="
     apply:
       steps:
       - run: "make cf/package"
