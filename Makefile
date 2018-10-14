@@ -13,6 +13,9 @@ cf/package:
 	  --s3-bucket $(LAMBDA_BUCKET)
 
 cf/plan:
+	aws cloudformation package \
+	  --template-file template.yaml \
+	  --output-template-file serverless-output.yaml
 	aws cloudformation deploy \
 	  --parameter-overrides BucketName=$(APK_BUCKET) FunctionName=$(STACK_NAME) \
 	  --template-file serverless-output.yaml \
