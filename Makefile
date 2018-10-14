@@ -3,9 +3,6 @@ APK_BUCKET ?= apk.cloudposse.com
 LAMBDA_BUCKET ?= $(STACK_NAME)
 BUCKET ?= apk.cloudposse.com
 
-export AWS_PROFILE
-export AWS_DEFAULT_PROFILE
-
 cf/bucket:
 	aws s3 mb s3://$(LAMBDA_BUCKET)
 
