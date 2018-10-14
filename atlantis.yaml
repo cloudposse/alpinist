@@ -38,9 +38,9 @@ workflows:
   cloudformation:
     plan:
       steps:
+      - run: "make cf/package"
       - run: "make cf/plan"
     apply:
       steps:
-      - run: "make cf/package"
       - run: "make cf/deploy"
       - run: "make cf/sync"
