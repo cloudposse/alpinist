@@ -10,7 +10,7 @@ projects:
   autoplan:
     when_modified:
       - "*.tf"
-    enabled: true
+    enabled: false
   apply_requirements:
     - "approved"
 
@@ -38,7 +38,7 @@ workflows:
   cloudformation:
     plan:
       steps:
-      - run: "make cf/plan"
+      - run: "make cf/plan AWS_PROFILE="
     apply:
       steps:
       - run: "make cf/package"
