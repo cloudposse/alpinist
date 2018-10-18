@@ -34,9 +34,10 @@ workflows:
   cloudformation:
     plan:
       steps:
-      - run: "make cf/package STAGE=prod TEMPLATE_FILE=$(PLANFILE}"
-      - run: "make cf/plan STAGE=prod TEMPLATE_FILE=$(PLANFILE}"
+      - run: "make cf/bucket 2>/dev/null || true" 
+      - run: "make cf/package TEMPLATE_FILE=$(PLANFILE}"
+      - run: "make cf/plan TEMPLATE_FILE=$(PLANFILE}"
     apply:
       steps:
-      - run: "make cf/deploy STAGE=prod TEMPLATE_FILE=$(PLANFILE}"
-      - run: "make cf/sync STAGE=prod
+      - run: "make cf/deploy TEMPLATE_FILE=$(PLANFILE}"
+      - run: "make cf/sync"
