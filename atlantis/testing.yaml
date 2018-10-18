@@ -40,9 +40,9 @@ workflows:
   cloudformation:
     plan:
       steps:
-      - run: "make cf/package STAGE=prod TEMPLATE_FILE=$(PLANFILE)"
-      - run: "make cf/plan STAGE=prod TEMPLATE_FILE=$(PLAN_FILE)"
+      - run: "make cf/package STAGE=prod TEMPLATE_FILE=${PLANFILE}"
+      - run: "make cf/plan STAGE=prod TEMPLATE_FILE=${PLAN_FILE}"
     apply:
       steps:
-      - run: "make cf/deploy STAGE=prod TEMPLATE_FILE=$(PLANFILE)"
-      - run: "make cf/sync STAGE=prod TEMPLATE_FILE=$(PLANFILE)"
+      - run: "make cf/deploy STAGE=prod TEMPLATE_FILE=$(PLANFILE}"
+      - run: "make cf/sync STAGE=prod"
