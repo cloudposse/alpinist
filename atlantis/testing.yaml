@@ -10,7 +10,7 @@ projects:
   autoplan:
     when_modified:
       - "*.tf"
-    enabled: false
+    enabled: true
   apply_requirements:
     - "approved"
 
