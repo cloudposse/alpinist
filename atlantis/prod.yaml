@@ -25,11 +25,11 @@ workflows:
     plan:
       steps:
       - run: "init-terraform"
-      - run: "terraform plan -no-color -var-file prod.tfvars -out $PLANFILE"
+      - run: "terraform plan -no-color -input=false -var-file prod.tfvars -out $PLANFILE"
     apply:
       steps:
       - run: "init-terraform"
-      - run: "terraform apply -no-color -var-file prod.tfvars $PLANFILE"
+      - run: "terraform apply -no-color -input=false -var-file prod.tfvars $PLANFILE"
 
   cloudformation:
     plan:

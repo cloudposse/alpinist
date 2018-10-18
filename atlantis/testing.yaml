@@ -30,11 +30,11 @@ workflows:
     plan:
       steps:
       - run: "init-terraform"
-      - run: "terraform plan -no-color -var-file testing.tfvars -out $PLANFILE"
+      - run: "terraform plan -no-color -input=false -var-file testing.tfvars -out $PLANFILE"
     apply:
       steps:
       - run: "init-terraform"
-      - run: "terraform apply -no-color -var-file testing.tfvars $PLANFILE"
+      - run: "terraform apply -no-color -input=false -var-file testing.tfvars $PLANFILE"
 
   # Lambda
   cloudformation:
