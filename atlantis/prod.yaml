@@ -8,8 +8,6 @@ projects:
   workspace: "default"
   terraform_version: "v0.11.7"
   autoplan:
-    when_modified:
-      - "*.tf"
     enabled: false
   apply_requirements:
     - "approved"
@@ -18,9 +16,7 @@ projects:
   workflow: "cloudformation"
   dir: "."
   autoplan:
-    when_modified:
-      - "*.yaml"
-    enabled: true
+    enabled: false
   apply_requirements:
     - "approved"
 
@@ -29,18 +25,18 @@ workflows:
     plan:
       steps:
       - run: "init-terraform"
-      - run: "terraform plan -no-color -var-file atlantis.tfvars -out $PLANFILE"
+      - run: "terraform plan -no-color -var-file prod.tfvars -out $PLANFILE"
     apply:
       steps:
       - run: "init-terraform"
-      - run: "terraform apply -no-color -var-file atlantis.tfvars $PLANFILE"
+      - run: "terraform apply -no-color -var-file prod.tfvars $PLANFILE"
 
   cloudformation:
     plan:
       steps:
-      - run: "make cf/package"
-      - run: "make cf/plan"
+      - run: "make cf/package STAGE=prod"
+      - run: "make cf/plan STAGE=prod"
     apply:
       steps:
-      - run: "make cf/deploy"
-      - run: "make cf/sync"
+      - run: "make cf/deploy STAGE=prod"
+      - run: "make cf/sync STAGE=prod"

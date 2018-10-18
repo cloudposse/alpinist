@@ -1,7 +1,7 @@
-STACK_NAME ?= cp-prod-apk
-APK_BUCKET ?= apk.cloudposse.com
+-include atlantis/$(STAGE).env
+
 LAMBDA_BUCKET ?= $(STACK_NAME)
-BUCKET ?= apk.cloudposse.com
+TEMPLATE_FILE ?= serverless-output.yaml
 
 cf/bucket:
 	aws s3 mb s3://$(LAMBDA_BUCKET)
@@ -9,16 +9,13 @@ cf/bucket:
 cf/package:
 	aws cloudformation package \
 	  --template-file template.yaml \
-	  --output-template-file serverless-output.yaml \
+	  --output-template-file $(TEMPLATE_FILE) \
 	  --s3-bucket $(LAMBDA_BUCKET)
 
 cf/plan:
-	aws cloudformation package \
-	  --template-file template.yaml \
-	  --output-template-file serverless-output.yaml
 	aws cloudformation deploy \
 	  --parameter-overrides BucketName=$(APK_BUCKET) FunctionName=$(STACK_NAME) \
-	  --template-file serverless-output.yaml \
+	  --template-file $(TEMPLATE_FILE) \
 	  --stack-name $(STACK_NAME) \
 	  --capabilities CAPABILITY_IAM \
 	  --no-execute-changeset
@@ -26,7 +23,7 @@ cf/plan:
 cf/deploy:
 	aws cloudformation deploy \
 	  --parameter-overrides BucketName=$(APK_BUCKET) FunctionName=$(STACK_NAME) \
-	  --template-file serverless-output.yaml \
+	  --template-file $(TEMPLATE_FILE) \
 	  --stack-name $(STACK_NAME) \
 	  --capabilities CAPABILITY_IAM
 
