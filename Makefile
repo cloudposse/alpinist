@@ -13,12 +13,12 @@ cf/package:
 	  --s3-bucket $(LAMBDA_BUCKET)
 
 cf/plan:
-	aws cloudformation deploy \
+	@aws cloudformation deploy \
 	  --parameter-overrides BucketName=$(APK_BUCKET) FunctionName=$(STACK_NAME) \
 	  --template-file $(TEMPLATE_FILE) \
 	  --stack-name $(STACK_NAME) \
 	  --capabilities CAPABILITY_IAM \
-	  --no-execute-changeset
+	  --no-execute-changeset 2>&1 | grep aws cloudformation describe-change-set | bash
 
 cf/deploy:
 	aws cloudformation deploy \
