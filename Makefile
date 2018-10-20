@@ -18,7 +18,7 @@ cf/plan:
 	  --template-file $(TEMPLATE_FILE) \
 	  --stack-name $(STACK_NAME) \
 	  --capabilities CAPABILITY_IAM \
-	  --no-execute-changeset 2>&1 | grep aws cloudformation describe-change-set | bash
+	  --no-execute-changeset 2>&1 | grep "aws cloudformation describe-change-set" | bash
 
 cf/deploy:
 	aws cloudformation deploy \
